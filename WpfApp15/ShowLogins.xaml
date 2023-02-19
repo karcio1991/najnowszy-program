@@ -1,0 +1,23 @@
+﻿<Window x:Class="WpfApp15.ShowLogins"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp15"
+        mc:Ignorable="d"
+        Title="ShowLogins" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="lstLoginy">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Users name" DisplayMemberBinding="{Binding UserName}" />
+                        <GridViewColumn Header="Password" DisplayMemberBinding="{Binding Password}" />
+                        <GridViewColumn Header="Full name" DisplayMemberBinding="{Binding FullName}" />
+                        <GridViewColumn Header="Phone number" DisplayMemberBinding="{Binding Phone}" />
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

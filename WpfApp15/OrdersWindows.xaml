@@ -1,0 +1,83 @@
+﻿<Window x:Class="WpfApp15.OrdersWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp15"
+        mc:Ignorable="d"
+       Title="OrdersWindow" Height="700" Width="910">
+
+
+    <Grid Style="{StaticResource styleGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="390" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Manage Orders"  Style="{StaticResource styleDoTextBlockow}" Grid.ColumnSpan="3"/>
+
+        <DataGrid x:Name="gridCustomersList" Style="{StaticResource styleDataGrid}" Grid.Row="1" Grid.Column="0" SelectedIndex="0" SelectedCellsChanged="gridCustomersList_SelectedCellsChanged" Grid.RowSpan="3" MouseDoubleClick="gridCustomersList_MouseDoubleClick" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="CustomerName" Binding="{Binding CustomerName}"/>
+                <DataGridTextColumn Header="CustomerPhone" Binding="{Binding CustomerPhone}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="gridProductsList"  Style="{StaticResource styleDataGrid}" Grid.Row="1" SelectedIndex="0" Grid.RowSpan="3" Grid.Column="2" Grid.ColumnSpan="2" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}"/>
+                <DataGridTextColumn Header="Categories" Binding="{Binding Categories.CategoryName}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="NumberOfProducts" Binding="{Binding NumberOfProducts}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="gridOrdersList" Style="{StaticResource styleDataGrid}"  Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Num" Binding="{Binding duplicateId}"/>
+                <DataGridTextColumn Header="Product" Binding="{Binding Products/ProductName}"/>
+
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                <DataGridTextColumn Header="UPrice" Binding="{Binding UPrice}"/>
+                <DataGridTextColumn Header="TotPrice" Binding="{Binding TotPrice}"/>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TextBlock Style="{StaticResource styleDoTextBlockow}"  Background="Red" Text="Jakis dopisek"/>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+
+
+
+
+        <TextBox x:Name="tbOrderId" Style="{StaticResource styleDoTextBoxow}" Text="Order ID" Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="btnDelete" Style="{StaticResource styleDoButtonow}" Grid.Row="3" Grid.Column="1" Content="Delete Order" Click="btnDelete_Click" />
+
+        <Button x:Name="btnClearAllgrid" Style="{StaticResource styleDoButtonow}" Grid.Row="4" Grid.Column="1" Content="Clear Order Tab" Click="btnClearAllgrid_Click" />
+
+
+
+
+        <Button x:Name="btnData" Content="Date" Style="{StaticResource styleDoButtonow}" Grid.Row="2" Grid.Column="1"/>
+
+        <ComboBox Name="cbWyborCategories" Style="{StaticResource styleComboBox}" Grid.Row="4" Grid.Column="0" SelectionChanged="cbWyborCategories_SelectionChanged" >
+        </ComboBox>
+
+        <TextBlock Text="Quantity" Name="tbQuantity" Style="{StaticResource styleDoTextBlockow}" Grid.Row="5" Grid.Column="1" />
+        <Button x:Name="btnInsertOrder" Content="Insert Order" Style="{StaticResource styleDoButtonow}" Grid.Row="5" Click="btnInsertOrder_Click"/>
+        <Button x:Name="btnViewOrders" Content="View Orders" Style="{StaticResource styleDoButtonow}" Grid.Row="6"  Click="btnViewOrders_Click" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

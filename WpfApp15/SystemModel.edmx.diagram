@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c90f2d087a5d44e2b44d6390b56df5b7" Name="Diagram1">
+        <EntityTypeShape EntityType="BazaDanychOkazjaModel.C__EFMigrationsHistory" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="BazaDanychOkazjaModel.Categories" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="BazaDanychOkazjaModel.Customers" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="BazaDanychOkazjaModel.Orders" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="BazaDanychOkazjaModel.Products" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="BazaDanychOkazjaModel.Users" Width="1.5" PointX="0.75" PointY="1.375" />
+        <AssociationConnector Association="BazaDanychOkazjaModel.FK_Categories_Products_Id" />
+        <AssociationConnector Association="BazaDanychOkazjaModel.FK_Products_Customers_CustomerssID" />
+        <AssociationConnector Association="BazaDanychOkazjaModel.FK_Orders_Users_UserssID" />
+        <AssociationConnector Association="BazaDanychOkazjaModel.FK_Products_Orders_OrderId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
