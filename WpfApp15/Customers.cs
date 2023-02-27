@@ -16,18 +16,23 @@ namespace WpfApp15
     {
         public Customers()
         {
-            this.Products = new HashSet<Products>();
+            //this.Orders = new List<Orders>();
         }
     
+        //te 3 bede w glownej tabeli tylko
         public int Id { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhone { get; set; }
+
+        //te bede w dodatkowym oknie
+
+
         public System.DateTime LastOrder { get; set; }
         public System.DateTime UpdatedDate { get; set; }
         public int OrdersAmountValue { get; set; }
         public int OrdersCount { get; set; }
         public int OrdersId { get; set; }
     
-        public virtual ICollection<Products> Products { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

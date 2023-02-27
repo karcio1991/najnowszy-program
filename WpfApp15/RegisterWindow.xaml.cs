@@ -31,14 +31,20 @@ namespace WpfApp15
             Users.Password = tbPassword.Text;
             Users.FullName = tbFullName.Text;
             Users.PhoneNumber = tbPhone.Text;
+            
 
             using(BazaDanychOkazjaEntities2 bazaDanychOkazjaEntities = new BazaDanychOkazjaEntities2())
             {
-                if(bazaDanychOkazjaEntities.Users.ToList().Any(x => x.UserName == Users.UserName))
+
+               
+
+                if (bazaDanychOkazjaEntities.Users.ToList().Any(x => x.UserName == Users.UserName))
                 {
                     MessageBox.Show("Choose other UserName.");
                     return;
                 }
+
+                
                 bazaDanychOkazjaEntities.Users.Add(Users);
                 bazaDanychOkazjaEntities.SaveChanges();
                 MessageBox.Show("Done.");

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp15"
         mc:Ignorable="d"
-        Title="ProductsWindow" Height="700" Width="900">
-    <Grid Style="{StaticResource styleGrid}">
+        Title="ProductsWindow" Height="700" Width="1200" >
+    <Grid Style="{StaticResource styleGrid}" Width="1200">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
@@ -18,8 +18,8 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="Manage Products"  Style="{StaticResource styleDoTextBlockow}" Grid.ColumnSpan="3"/>
@@ -29,20 +29,22 @@
         <Button x:Name="btnHome"  Style="{StaticResource styleDoButtonow}" Content="Home" Click="btnHome_Click" Grid.Row="4" Grid.Column="0" />
         <Button x:Name="btnEdit"  Style="{StaticResource styleDoButtonow}" Content="Edit" Click="btnEdit_Click" Grid.Row="5" Grid.Column="0" />
 
+        <ComboBox Name="cbCategorii" Style="{StaticResource styleComboBox}" SelectionChanged="cbCategorii_SelectionChanged" Grid.Row="5" Grid.Column="3" IsSynchronizedWithCurrentItem="True" />
+
         <TextBox x:Name="tbProductName" Text="ProductName" Style="{StaticResource styleDoTextBoxow}" Grid.Row="1"  Grid.Column="1" />
         <TextBox x:Name="tbProductPrice" Text="0" Style="{StaticResource styleDoTextBoxow}" Grid.Row="2"  Grid.Column="1" />
         <TextBox x:Name="tbProductDesc" Text="Description" Style="{StaticResource styleDoTextBoxow}" Grid.Row="3"  Grid.Column="1" />
 
-        <ComboBox Name="cbCategories" Style="{StaticResource styleComboBox}" Grid.Row="4" Grid.Column="1" />
-
-        <DataGrid x:Name="gridProductsList"  Grid.Row="1" Grid.Column="2" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Style="{StaticResource styleDataGrid}" Grid.RowSpan="4" SelectionChanged="gridProductsList_Selected" >
+       
+        <TextBox x:Name="tbCategories" Text="Category" Style="{StaticResource styleDoTextBoxow}" Grid.Row="4"  Grid.Column="1" />
+        <DataGrid x:Name="gridProductsList"  Style="{StaticResource styleDataGrid}" Grid.Row="1" SelectedIndex="0" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="2" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}"/>
                 <DataGridTextColumn Header="Categories" Binding="{Binding Categories.CategoryName}"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                <DataGridTextColumn Header="NumberOfProducts" Binding="{Binding NumberOfProducts}"/>
+                <DataGridTextColumn Header="Count" Binding="{Binding NumberOfProducts}"/>
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Text="Number of products" x:Name="tbNumberOfProducts" Grid.Column="1" Grid.Row="5" Style="{StaticResource styleDoTextBlockow}"/>

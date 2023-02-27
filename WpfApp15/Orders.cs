@@ -11,22 +11,60 @@ namespace WpfApp15
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Orders
     {
         public Orders()
         {
             this.Products = new HashSet<Products>();
+            //Customers = new Customers();
+           // Users = new Users();
         }
-    
+
         public int Id { get; set; }
         public int Quantity { get; set; }
         public decimal UPrice { get; set; }
         public decimal TotPrice { get; set; }
         public int ProducterId { get; set; }
         public int UserssID { get; set; }
-    
-        public virtual Users Users { get; set; }
+        public int CustomerssID { get; set; }
+
+        public virtual Customers Customers { get; set; }
+        public string CustomersName { get { return Customers.CustomerName; } }
+        public virtual Users Users { get; set; } = null;
+        public string UserName { get { return Users.UserName; } }
+
+        public string UserNameRealNotMatter
+        {
+            get { return Users.UserName; }
+            set
+            {
+                Users.UserName = value;
+                
+            }
+        }
+
+
+
+
+
         public virtual ICollection<Products> Products { get; set; }
+
+        public string ProductName
+        {
+            get
+            {
+                if (Products.Count == 0) return "pusty";
+                return Products.FirstOrDefault(x => x.ProductName != "").ProductName;
+            }
+            set
+            {
+                
+                Products.First().ProductName = value;
+            }
+
+        }
+
     }
 }

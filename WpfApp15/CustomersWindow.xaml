@@ -45,17 +45,17 @@
 
         <DataGrid x:Name="gridCustomersList" IsReadOnly="False" Grid.Row="1" Grid.Column="3" AutoGenerateColumns="False" Style="{StaticResource styleDataGrid}" Grid.RowSpan="5" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="CustomerName" Binding="{Binding CustomerName}"/>
-                <DataGridTextColumn Header="CustomerPhone" Binding="{Binding CustomerPhone}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="CustomerName" Binding="{Binding CustomerName}" x:Name="CustomerNameDataGrid"/>
+                <DataGridTextColumn Header="CustomerPhone" Binding="{Binding CustomerPhone}" x:Name="CustomerPhoneDataGrid"/>
 
             </DataGrid.Columns>
         </DataGrid>
 
 
-        <Button x:Name="btnOrders" Content="Orders Count" Style="{StaticResource bigButtonStyle}" Grid.Row="6" VerticalAlignment="Top"/>
-        <Button x:Name="btnAmount" Content="Orders Amount" Style="{StaticResource bigButtonStyle}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Top" />
-        <Button x:Name="btnDate" Content="Last Order Date" Style="{StaticResource bigButtonStyle}" Grid.Row="6" Grid.Column="2" VerticalAlignment="Top" />
+        <Button x:Name="btnOrders" Click="btnOrders_Click" Content="Orders Count" Style="{StaticResource bigButtonStyle}" Grid.Row="6" VerticalAlignment="Top"/>
+        <Button x:Name="btnAmount" Click="btnAmount_Click" Content="Orders Amount" Style="{StaticResource bigButtonStyle}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Top" />
+        <Button x:Name="btnDate" Click="btnDate_Click" Content="Last Order Date" Style="{StaticResource bigButtonStyle}" Grid.Row="6" Grid.Column="2" VerticalAlignment="Top" />
 
     </Grid>
 </Window>

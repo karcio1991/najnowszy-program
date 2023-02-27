@@ -11,12 +11,13 @@ namespace WpfApp15
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.CompilerServices;
+
     public partial class Users
     {
         public Users()
         {
-            this.Orders = new HashSet<Orders>();
+           // this.Orders = new HashSet<Orders>();
         }
     
         public int Id { get; set; }
@@ -24,7 +25,13 @@ namespace WpfApp15
         public string Password { get; set; }
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }
-    
+
+
+        public Nullable<bool> Online { get; set; } = false;
         public virtual ICollection<Orders> Orders { get; set; }
+
+
+
+
     }
 }

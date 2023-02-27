@@ -11,13 +11,27 @@ namespace WpfApp15
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Categories
+    using WpfApp15.AddClasses;
+    public partial class Categories 
     {
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public int ProductsId { get; set; }
-    
-        public virtual Products Products { get; set; }
+
+        public int ProductsCount { get { return Products.Count; } }
+        public virtual ICollection<Products> Products { get; set; }
+        
+        public Categories(string categoryName)
+        {
+            //Products = new Products();
+
+            this.CategoryName = categoryName;
+            
+        }
+       
+        public Categories()
+        {
+
+        }
     }
 }

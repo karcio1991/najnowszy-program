@@ -35,6 +35,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Category Name" Binding="{Binding CategoryName}"/>
+                <DataGridTextColumn Header="Count Products" Binding="{Binding ProductsCount}" />
             </DataGrid.Columns>
         </DataGrid>
 

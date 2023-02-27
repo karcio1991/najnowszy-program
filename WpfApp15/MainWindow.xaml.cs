@@ -24,7 +24,7 @@ namespace WpfApp15
         {
             InitializeComponent();
         }
-
+        
         private void btnCreateAccount_Click(object sender, RoutedEventArgs e)
         {
             RegisterWindow registerWindow = new RegisterWindow();
@@ -39,6 +39,11 @@ namespace WpfApp15
                 var correctLogin = users.FirstOrDefault(us => us.UserName == tbUsersName.Text && us.Password == tbPassword.Password);
                 if(correctLogin != null)
                 {
+
+                    //tutaj musisz ustawic online na true
+                    bazaDanychOkazjaEntities.Users.FirstOrDefault(x => x.UserName == tbUsersName.Text).Online = true;
+                    bazaDanychOkazjaEntities.SaveChanges();
+
                     this.Hide();
                     MenuWindow menuWindow = new MenuWindow();
                     menuWindow.Show();

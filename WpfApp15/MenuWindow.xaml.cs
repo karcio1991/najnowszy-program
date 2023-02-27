@@ -26,7 +26,9 @@ namespace WpfApp15
 
         private void btnUsers_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
+            UserWindow userWindow = new UserWindow();
+            userWindow.Show();
         }
 
         private void btnProducts_Click(object sender, RoutedEventArgs e)

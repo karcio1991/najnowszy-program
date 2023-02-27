@@ -49,25 +49,34 @@ namespace WpfApp15
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
 
+            using (BazaDanychOkazjaEntities2 bazaDanychOkazjaEntities = new BazaDanychOkazjaEntities2())
+            {
+                MessageBox.Show(bazaDanychOkazjaEntities.Categories.Count().ToString());
+            }
+
         }
+
+
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Categories categories = new Categories();
-            categories.CategoryName = tbNewCategory.Text;
-            categories.Products = new Products();
-            categories.Products.Customers = new Customers();
-            categories.Products.Orders = new Orders();
-            categories.Products.Orders.Users = new Users();
 
+            // NIE DODAJAMY SAMYCH KATEGORII JEDYNIE TUTAJ NIMI ZARZADZAMY, DODAJEMY JE WRAZ Z PRODUKTAMI
             using (BazaDanychOkazjaEntities2 bazaDanychOkazjaEntities = new BazaDanychOkazjaEntities2())
             {
-                bazaDanychOkazjaEntities.Categories.Add(categories);
+                int index = bazaDanychOkazjaEntities.Categories.ToList().LastOrDefault().Id;
+                Categories cata = new Categories()
+                {
+                    Id = index + 1,
+                    CategoryName = tbNewCategory.Text,
+                    Products = null,
+                };
+                bazaDanychOkazjaEntities.Categories.Add(cata);
                 bazaDanychOkazjaEntities.SaveChanges();
             }
 
-
             DisplayCategories();
+
         }
 
         public void DisplayCategories()
@@ -77,7 +86,7 @@ namespace WpfApp15
             {
                 foreach (var item in bazaDanychOkazjaEntities.Categories)
                 {
-                    ListOfCategory.Add(item);
+                    ListOfCategory.Add(new Categories() { CategoryName = item.CategoryName, Id = item.Id, Products = item.Products });
                 }
                 gridCategoriesList.ItemsSource = ListOfCategory;
             }

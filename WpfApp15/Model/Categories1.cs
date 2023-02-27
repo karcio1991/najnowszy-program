@@ -21,7 +21,8 @@ namespace finalny_program_managementSystem.Model
 
         }
 
-        public Products1 Products { get; set; }
+        public ICollection<Products1> Products { get; set; }
+
 
         [ForeignKey("Product")]
         public int ProductsId { get; set; }

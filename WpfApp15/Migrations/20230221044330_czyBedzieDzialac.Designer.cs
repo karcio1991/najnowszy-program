@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using finalny_program_managementSystem;
 
 namespace WpfApp15.Migrations
 {
     [DbContext(typeof(MyOwnContext))]
-    partial class MyOwnContextModelSnapshot : ModelSnapshot
+    [Migration("20230221044330_czyBedzieDzialac")]
+    partial class czyBedzieDzialac
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

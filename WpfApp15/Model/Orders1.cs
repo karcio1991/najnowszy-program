@@ -37,7 +37,8 @@ namespace finalny_program_managementSystem.Model
         //public int CustomerId { get; set; } //wazne nazewnictwo
 
         //public int ProductId { get; set; }
-
+        public Customers1 Customers { get; set; }
+        public int CustomerssID { get; set; }
 
     }
 }

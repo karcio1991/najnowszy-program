@@ -3,10 +3,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WpfApp15.Migrations
 {
-    public partial class xxd : Migration
+    public partial class migracjaNowePolaczenieCategoriesWithProducts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryName = table.Column<string>(nullable: true),
+                    ProductsId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
@@ -52,11 +66,18 @@ namespace WpfApp15.Migrations
                     UPrice = table.Column<decimal>(nullable: false),
                     TotPrice = table.Column<decimal>(nullable: false),
                     ProducterId = table.Column<int>(nullable: false),
-                    UserssID = table.Column<int>(nullable: false)
+                    UserssID = table.Column<int>(nullable: false),
+                    CustomerssID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Customers_CustomerssID",
+                        column: x => x.CustomerssID,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Users_UserssID",
                         column: x => x.UserssID,
@@ -75,18 +96,18 @@ namespace WpfApp15.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     NumberOfProducts = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false),
-                    CustomerssID = table.Column<int>(nullable: false)
+                    CategoriesId = table.Column<int>(nullable: false),
+                    OrderId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Customers_CustomerssID",
-                        column: x => x.CustomerssID,
-                        principalTable: "Customers",
+                        name: "FK_Products_Categories_CategoriesId",
+                        column: x => x.CategoriesId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_Orders_OrderId",
                         column: x => x.OrderId,
@@ -95,24 +116,10 @@ namespace WpfApp15.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    CategoryName = table.Column<string>(nullable: true),
-                    ProductsId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_Products_Id",
-                        column: x => x.Id,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_CustomerssID",
+                table: "Orders",
+                column: "CustomerssID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserssID",
@@ -120,9 +127,9 @@ namespace WpfApp15.Migrations
                 column: "UserssID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CustomerssID",
+                name: "IX_Products_CategoriesId",
                 table: "Products",
-                column: "CustomerssID");
+                column: "CategoriesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_OrderId",
@@ -133,16 +140,16 @@ namespace WpfApp15.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Users");

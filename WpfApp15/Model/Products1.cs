@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace finalny_program_managementSystem.Model
 {
+    using Microsoft.EntityFrameworkCore.Metadata;
     using Model;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -35,14 +36,15 @@ namespace finalny_program_managementSystem.Model
 
         public Categories1 Categories { get; set; }
         // public int CategoriesId { get; set; }
+        public int CategoriesId { get; set; }
 
         public Orders1 Orders { get; set; }
         public int OrderId { get; set; }
 
         //dobrze
 
-        public Customers1 Customers { get; set; }
-        public int CustomerssID { get; set; }
+     
 
     }
+
 }

@@ -16,7 +16,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar(max)" />
           <Property Name="ProductsId" Type="int" Nullable="false" />
         </EntityType>
@@ -43,6 +43,7 @@
           <Property Name="TotPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ProducterId" Type="int" Nullable="false" />
           <Property Name="UserssID" Type="int" Nullable="false" />
+          <Property Name="CustomerssID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -53,8 +54,8 @@
           <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="NumberOfProducts" Type="int" Nullable="false" />
+          <Property Name="CategoriesId" Type="int" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
-          <Property Name="CustomerssID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -65,54 +66,19 @@
           <Property Name="Password" Type="nvarchar(max)" />
           <Property Name="FullName" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Online" Type="bit" />
         </EntityType>
-        <Association Name="FK_Categories_Products_Id">
-          <End Role="Products" Type="Self.Products" Multiplicity="1">
+        <Association Name="FK_Products_Categories_CategoriesId">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Categories">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Users_UserssID">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="UserssID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Customers_CustomerssID">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Customers">
+            <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="CustomerssID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Orders_OrderId">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="OrderId" />
+              <PropertyRef Name="CategoriesId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -123,20 +89,8 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Categories_Products_Id" Association="Self.FK_Categories_Products_Id">
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="FK_Products_Categories_CategoriesId" Association="Self.FK_Products_Categories_CategoriesId">
             <End Role="Categories" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Users_UserssID" Association="Self.FK_Orders_Users_UserssID">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Customers_CustomerssID" Association="Self.FK_Products_Customers_CustomerssID">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Orders_OrderId" Association="Self.FK_Products_Orders_OrderId">
-            <End Role="Orders" EntitySet="Orders" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
@@ -151,63 +105,65 @@
           <EntitySet Name="Orders" EntityType="BazaDanychOkazjaModel.Orders" />
           <EntitySet Name="Products" EntityType="BazaDanychOkazjaModel.Products" />
           <EntitySet Name="Users" EntityType="BazaDanychOkazjaModel.Users" />
-          <AssociationSet Name="FK_Categories_Products_Id" Association="BazaDanychOkazjaModel.FK_Categories_Products_Id">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Categories" EntitySet="Categories" />
+          <AssociationSet Name="FK_Products_Categories_CategoriesId" Association="BazaDanychOkazjaModel.FK_Products_Categories_CategoriesId">
+            <End EntitySet="Categories" Role="Categories" />
+            <End EntitySet="Products" Role="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Customers_CustomerssID" Association="BazaDanychOkazjaModel.FK_Products_Customers_CustomerssID">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="FK_Orders_Customers_CustomerssID" Association="BazaDanychOkazjaModel.FK_Orders_Customers_CustomerssID">
+            <End EntitySet="Customers" Role="Customers" />
+            <End EntitySet="Orders" Role="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Users_UserssID" Association="BazaDanychOkazjaModel.FK_Orders_Users_UserssID">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Orders" EntitySet="Orders" />
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="Orders" Role="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Orders_OrderId" Association="BazaDanychOkazjaModel.FK_Products_Orders_OrderId">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Products" EntitySet="Products" />
+            <End EntitySet="Orders" Role="Orders" />
+            <End EntitySet="Products" Role="Products" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__EFMigrationsHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
           </Key>
-          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MigrationId" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="ProductVersion" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" Type="String" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ProductsId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="BazaDanychOkazjaModel.FK_Categories_Products_Id" FromRole="Categories" ToRole="Products" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="CategoryName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="ProductsId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="BazaDanychOkazjaModel.FK_Products_Categories_CategoriesId" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LastOrder" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="OrdersAmountValue" Type="Int32" Nullable="false" />
-          <Property Name="OrdersCount" Type="Int32" Nullable="false" />
-          <Property Name="OrdersId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="BazaDanychOkazjaModel.FK_Products_Customers_CustomerssID" FromRole="Customers" ToRole="Products" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="CustomerName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="CustomerPhone" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="LastOrder" Nullable="false" Precision="7" Type="DateTime" />
+          <Property Name="UpdatedDate" Nullable="false" Precision="7" Type="DateTime" />
+          <Property Name="OrdersAmountValue" Nullable="false" Type="Int32" />
+          <Property Name="OrdersCount" Nullable="false" Type="Int32" />
+          <Property Name="OrdersId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="BazaDanychOkazjaModel.FK_Orders_Customers_CustomerssID" FromRole="Customers" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="UPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ProducterId" Type="Int32" Nullable="false" />
-          <Property Name="UserssID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Quantity" Nullable="false" Type="Int32" />
+          <Property Name="UPrice" Nullable="false" Precision="18" Scale="2" Type="Decimal" />
+          <Property Name="TotPrice" Nullable="false" Precision="18" Scale="2" Type="Decimal" />
+          <Property Name="ProducterId" Nullable="false" Type="Int32" />
+          <Property Name="UserssID" Nullable="false" Type="Int32" />
+          <Property Name="CustomerssID" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="BazaDanychOkazjaModel.FK_Orders_Customers_CustomerssID" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="Users" Relationship="BazaDanychOkazjaModel.FK_Orders_Users_UserssID" FromRole="Orders" ToRole="Users" />
           <NavigationProperty Name="Products" Relationship="BazaDanychOkazjaModel.FK_Products_Orders_OrderId" FromRole="Orders" ToRole="Products" />
         </EntityType>
@@ -215,57 +171,57 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NumberOfProducts" Type="Int32" Nullable="false" />
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="CustomerssID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Categories" Relationship="BazaDanychOkazjaModel.FK_Categories_Products_Id" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="Customers" Relationship="BazaDanychOkazjaModel.FK_Products_Customers_CustomerssID" FromRole="Products" ToRole="Customers" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="ProductName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Price" Nullable="false" Precision="18" Scale="2" Type="Decimal" />
+          <Property Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="NumberOfProducts" Nullable="false" Type="Int32" />
+          <Property Name="CategoriesId" Nullable="false" Type="Int32" />
+          <Property Name="OrderId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Categories" Relationship="BazaDanychOkazjaModel.FK_Products_Categories_CategoriesId" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="Orders" Relationship="BazaDanychOkazjaModel.FK_Products_Orders_OrderId" FromRole="Products" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="UserName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Password" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="FullName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
           <NavigationProperty Name="Orders" Relationship="BazaDanychOkazjaModel.FK_Orders_Users_UserssID" FromRole="Users" ToRole="Orders" />
+          <Property Name="Online" Type="Boolean" />
         </EntityType>
-        <Association Name="FK_Categories_Products_Id">
-          <End Type="BazaDanychOkazjaModel.Products" Role="Products" Multiplicity="1">
+        <Association Name="FK_Products_Categories_CategoriesId">
+          <End Type="BazaDanychOkazjaModel.Categories" Multiplicity="1" Role="Categories">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="BazaDanychOkazjaModel.Categories" Role="Categories" Multiplicity="0..1" />
+          <End Type="BazaDanychOkazjaModel.Products" Multiplicity="*" Role="Products" />
           <ReferentialConstraint>
-            <Principal Role="Products">
+            <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Categories">
-              <PropertyRef Name="Id" />
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoriesId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Customers_CustomerssID">
-          <End Type="BazaDanychOkazjaModel.Customers" Role="Customers" Multiplicity="1" />
-          <End Type="BazaDanychOkazjaModel.Products" Role="Products" Multiplicity="*" />
+        <Association Name="FK_Orders_Customers_CustomerssID">
+          <End Type="BazaDanychOkazjaModel.Customers" Multiplicity="1" Role="Customers" />
+          <End Type="BazaDanychOkazjaModel.Orders" Multiplicity="*" Role="Orders" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Products">
+            <Dependent Role="Orders">
               <PropertyRef Name="CustomerssID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Users_UserssID">
-          <End Type="BazaDanychOkazjaModel.Users" Role="Users" Multiplicity="1" />
-          <End Type="BazaDanychOkazjaModel.Orders" Role="Orders" Multiplicity="*" />
+          <End Type="BazaDanychOkazjaModel.Users" Multiplicity="1" Role="Users" />
+          <End Type="BazaDanychOkazjaModel.Orders" Multiplicity="*" Role="Orders" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -276,8 +232,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Orders_OrderId">
-          <End Type="BazaDanychOkazjaModel.Orders" Role="Orders" Multiplicity="1" />
-          <End Type="BazaDanychOkazjaModel.Products" Role="Products" Multiplicity="*" />
+          <End Type="BazaDanychOkazjaModel.Orders" Multiplicity="1" Role="Orders" />
+          <End Type="BazaDanychOkazjaModel.Products" Multiplicity="*" Role="Products" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="Id" />
@@ -327,6 +283,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="BazaDanychOkazjaModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="CustomerssID" ColumnName="CustomerssID" />
                 <ScalarProperty Name="UserssID" ColumnName="UserssID" />
                 <ScalarProperty Name="ProducterId" ColumnName="ProducterId" />
                 <ScalarProperty Name="TotPrice" ColumnName="TotPrice" />
@@ -339,8 +296,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="BazaDanychOkazjaModel.Products">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="CustomerssID" ColumnName="CustomerssID" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CategoriesId" ColumnName="CategoriesId" />
                 <ScalarProperty Name="NumberOfProducts" ColumnName="NumberOfProducts" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -352,6 +309,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BazaDanychOkazjaModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Online" ColumnName="Online" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

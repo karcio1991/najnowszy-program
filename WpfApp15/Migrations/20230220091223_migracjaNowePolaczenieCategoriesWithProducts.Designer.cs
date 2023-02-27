@@ -10,8 +10,8 @@ using finalny_program_managementSystem;
 namespace WpfApp15.Migrations
 {
     [DbContext(typeof(MyOwnContext))]
-    [Migration("20230219130112_xxd")]
-    partial class xxd
+    [Migration("20230220091223_migracjaNowePolaczenieCategoriesWithProducts")]
+    partial class migracjaNowePolaczenieCategoriesWithProducts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,10 +21,12 @@ namespace WpfApp15.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Categories", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Categories1", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
@@ -37,7 +39,7 @@ namespace WpfApp15.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Customers", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Customers1", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,12 +72,15 @@ namespace WpfApp15.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Orders", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Orders1", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerssID")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProducterId")
                         .HasColumnType("int");
@@ -94,19 +99,21 @@ namespace WpfApp15.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerssID");
+
                     b.HasIndex("UserssID");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Products", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Products1", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerssID")
+                    b.Property<int>("CategoriesId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -126,14 +133,14 @@ namespace WpfApp15.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerssID");
+                    b.HasIndex("CategoriesId");
 
                     b.HasIndex("OrderId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Users", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Users1", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,31 +164,28 @@ namespace WpfApp15.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Categories", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Orders1", b =>
                 {
-                    b.HasOne("finalny_program_managementSystem.Model.Products", "Products")
-                        .WithOne("Categories")
-                        .HasForeignKey("finalny_program_managementSystem.Model.Categories", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("finalny_program_managementSystem.Model.Customers1", "Customers")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerssID")
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Orders", b =>
-                {
-                    b.HasOne("finalny_program_managementSystem.Model.Users", "Users")
+                    b.HasOne("finalny_program_managementSystem.Model.Users1", "Users")
                         .WithMany("Orders")
                         .HasForeignKey("UserssID")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("finalny_program_managementSystem.Model.Products", b =>
+            modelBuilder.Entity("finalny_program_managementSystem.Model.Products1", b =>
                 {
-                    b.HasOne("finalny_program_managementSystem.Model.Customers", "Customers")
+                    b.HasOne("finalny_program_managementSystem.Model.Categories1", "Categories")
                         .WithMany("Products")
-                        .HasForeignKey("CustomerssID")
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("finalny_program_managementSystem.Model.Orders", "Orders")
+                    b.HasOne("finalny_program_managementSystem.Model.Orders1", "Orders")
                         .WithMany("Products")
                         .HasForeignKey("OrderId")
                         .IsRequired();

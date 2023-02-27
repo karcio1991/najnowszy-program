@@ -11,24 +11,50 @@ namespace WpfApp15
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Products
+    using WpfApp15.AddClasses;
+    public class Products
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
         public decimal Price { get; set; }
+        public string PriceText
+        {
+            get { return Price.ToString(); }
+            set { Price = decimal.Parse(value); }
+        }
+
+
         public string Description { get; set; }
         public int NumberOfProducts { get; set; }
         public int OrderId { get; set; }
-        public int CustomerssID { get; set; }
-    
+
         public virtual Categories Categories { get; set; }
-        public virtual Customers Customers { get; set; } = null;
-        public virtual Orders Orders { get; set; }
+        public string CategoriesName
+        {
+            get { return Categories.CategoryName; }
+            set
+            {
+                Categories = new Categories();
+                Categories.CategoryName = value;
+            }
+        }
+
+        public int CategoriesId { get; set; }
+        public virtual Orders Orders { get; set; } = null;
+
+        public Products(string categoryName)
+        {
+            CategoriesName = categoryName;
+
+            // Orders = new Orders();
+            // Categories = new Categories();
+        }
 
         public Products()
         {
-            
+
         }
+
+
     }
 }

@@ -17,6 +17,8 @@ namespace finalny_program_managementSystem.Model
        
         public string PhoneNumber { get; set; }
 
+        public bool Online { get; set; }
+
         public Users1()
         {
 

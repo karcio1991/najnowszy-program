@@ -31,7 +31,8 @@ namespace finalny_program_managementSystem.Model
 
         public int OrdersId { get; set; }
 
-        public ICollection<Products1> Products { get; set; }
+        
+        public ICollection<Orders1> Orders { get; set; }
 
     }
 }

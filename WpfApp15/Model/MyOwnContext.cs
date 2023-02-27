@@ -58,10 +58,10 @@ namespace finalny_program_managementSystem
             //modelBuilder.Entity<Categories>().HasKey(x => x.Id);
 
 
-            modelBuilder.Entity<Model.Categories1>()
-                .HasOne<Model.Products1>(x => x.Products)
-                .WithOne(y => y.Categories)
-                .HasForeignKey<Model.Categories1>(z => z.Id);
+            modelBuilder.Entity<Products1>()
+                .HasOne<Categories1>(x => x.Categories)
+                .WithMany(y => y.Products);
+          
 
 
             modelBuilder.Entity<Products1>()
@@ -77,12 +77,21 @@ namespace finalny_program_managementSystem
             .OnDelete(DeleteBehavior.ClientSetNull);
 
 
+            //zle
+            /*
             modelBuilder.Entity<Products1>()
               .HasOne<Customers1>(x => x.Customers)
               .WithMany(z => z.Products)
               .HasForeignKey(o => o.CustomerssID)
               .OnDelete(DeleteBehavior.ClientSetNull);
+            */
 
+            //poprawna wersja 
+            modelBuilder.Entity<Orders1>()
+             .HasOne<Customers1>(x => x.Customers)
+             .WithMany(z => z.Orders)
+             .HasForeignKey(o => o.CustomerssID)
+             .OnDelete(DeleteBehavior.ClientSetNull);
 
         }
 
